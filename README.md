@@ -3,9 +3,10 @@
 
 <ul>
 	<li>	
-		DbToXml db = new DbToXml("jdbc:mysql://localhost:3306/...", "root", "", "com.mysql.cj.jdbc.Driver");
-        Document doc = db.parseAllDb();
-        db.save("file.xml");
+		<h5> parsing the whole database </h5>
+		DbToXml db = new DbToXml("jdbc:mysql://localhost:3306/...", "root", "", "com.mysql.cj.jdbc.Driver"); </br>
+        Document doc = db.parseAllDb();</br>
+        db.save("file.xml");</br>
 	</li>
 		
 </ul>
