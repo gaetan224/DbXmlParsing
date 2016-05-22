@@ -9,28 +9,29 @@
         db.save("file.xml");</br>
 
         file.xml:
-        <i>
-        <?xml version="1.0" encoding="utf-8" standalone="no"?></br>
-            <databaseName></br>
-                <table1s></br>
-                    <table1 id="[id value for line in database]"></br>
-                        <field1></br>
-                        [field1 value]</br>
-                        </field1></br>
+        ```
+        <?xml version="1.0" encoding="utf-8" standalone="no"?>
+            <databaseName>
+                <table1s>
+                    <table1 id="[id value for line in database]">
+                        <field1>
+                        [field1 value]
+                        </field1>
 
-                        <field2></br>
-                        [field2 value]</br>
-                        </field2></br>
-                        ...</br>
+                        <field2>
+                        [field2 value]
+                        </field2>
+                        ...
 
-                    </table1></br>
-                    ...</br>
+                    </table1>
+                    ...
 
-                </table1s></br>
+                </table1s>
 
-                ...</br>
-            </databaseName> </br>
-        </i>
+                ...
+            </databaseName>
+            ```
+
 	</li>
 		
 </ul>
