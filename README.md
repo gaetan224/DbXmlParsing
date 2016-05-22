@@ -9,7 +9,7 @@
         db.save("file.xml");</br>
 
         file.xml:
-        ```
+        <pre>
         <?xml version="1.0" encoding="utf-8" standalone="no"?>
             <databaseName>
                 <table1s>
@@ -30,7 +30,7 @@
 
                 ...
             </databaseName>
-            ```
+            </pre>
 
 	</li>
 		
