@@ -13,7 +13,7 @@ public class App
     try {
 
         DbToXml db = new DbToXml("jdbc:mysql://localhost:3306/filme?useLegacyDatetimeCode=false&serverTimezone=America/New_York", "root", "", "com.mysql.cj.jdbc.Driver");
-        Document doc = db.parseAllDb();
+        Document doc = db.parseQuery("SelEct * FROM movie");
         db.save("file.xml");
 
     }catch (Exception ex){

@@ -4,8 +4,9 @@ import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
+
+import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -33,15 +34,21 @@ public class DbToXml {
         conn = DriverManager.getConnection(url, username, password);
         dbName = conn.getCatalog();
 
+
+    }
+
+    /**
+     *
+     * @return
+     * @throws ParserConfigurationException
+     * @throws SQLException
+     * @throws TransformerException
+     */
+
+    public Document parseAllDb() throws ParserConfigurationException, SQLException, TransformerException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
         doc = db.newDocument();
-    }
-
-    public Document parseAllDb() throws ParserConfigurationException, SQLException, TransformerException {
-
-        System.out.println("DB = "+conn.getCatalog());
-
 
         Element root = doc.createElement(dbName);
         doc.appendChild(root);
@@ -58,7 +65,7 @@ public class DbToXml {
         //iterate over tables
         while (rs.next()) {
             tableName = rs.getString("TABLE_NAME");
-            System.out.println(rs.getString("TABLE_NAME"));
+            //System.out.println(rs.getString("TABLE_NAME"));
 
             //add table xml element
             Element tableElement = doc.createElement(tableName+"s");
@@ -91,6 +98,40 @@ public class DbToXml {
 
     }
 
+
+    /**
+     *
+     * @param query
+     * @return
+     * @throws ParserConfigurationException
+     * @throws SQLException
+     * @throws TransformerException
+     */
+    public Document parseQuery(String query) throws Exception {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        doc = db.newDocument();
+
+        Element root = doc.createElement(dbName);
+        doc.appendChild(root);
+        Statement stat = conn.createStatement();
+
+        if(!StringUtils.containsIgnoreCase(query, "SELECT")){
+           //System.out.println("OKOKOK");
+            throw new Exception("This is not a SELECT Query");
+        }
+
+        ResultSet r = stat.executeQuery(query);
+
+
+
+
+
+
+
+        return doc;
+    }
+
     public void save(String outputDir) throws TransformerException {
         //saving file
         TransformerFactory tFactory = TransformerFactory.newInstance();
@@ -114,6 +155,14 @@ public class DbToXml {
         }
         return keys;
     }
+
+
+
+
+
+
+
+
 
     /*
     public List getTableNames() throws SQLException {
