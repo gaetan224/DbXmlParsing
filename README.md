@@ -10,26 +10,26 @@
 
         file.xml:
         <pre>
-        <?xml version="1.0" encoding="utf-8" standalone="no"?>
-            <databaseName>
-                <table1s>
-                    <table1 id="[id value for line in database]">
-                        <field1>
+        &lt;?xml version="1.0" encoding="utf-8" standalone="no"?&gt;
+            &lt;databaseName&gt;
+                &lt;table1s&gt;
+                    &lt;table1 id="[id value for line in database]"&gt;
+                        &lt;field1&gt;
                         [field1 value]
-                        </field1>
+                        &lt;/field1&gt;
 
-                        <field2>
+                        &lt;field2&gt;
                         [field2 value]
-                        </field2>
+                        &lt;/field2&gt;
                         ...
 
-                    </table1>
+                    &lt;/table1&gt;
                     ...
 
-                </table1s>
+                &lt;/table1s&gt;
 
                 ...
-            </databaseName>
+            &lt;/databaseName&gt;
             </pre>
 
 	</li>
