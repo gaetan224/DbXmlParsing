@@ -46,7 +46,7 @@
             &lt;?xml version="1.0" encoding="utf-8" standalone="no"?&gt;
                 &lt;Query&gt;
                     &lt;line&gt;
-                        &lt;table1 id="[id value for line in database]"&gt;
+
                             &lt;field1&gt;
                             [field1's value]
                             &lt;/field1&gt;
@@ -75,7 +75,7 @@
                     &lt;?xml version="1.0" encoding="utf-8" standalone="no"?&gt;
                         &lt;Query&gt;
                             &lt;line&gt;
-                                &lt;table1 id="[id value for line in database]"&gt;
+
                                     &lt;field1&gt;
                                     [field1's value]
                                     &lt;/field1&gt;
