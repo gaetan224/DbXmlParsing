@@ -121,7 +121,7 @@ public class DbToXml {
 
     public Document parseQuery(String query, Object[] parameters) throws Exception {
 
-        Statement stat = conn.createStatement();
+        PreparedStatement preparedStatement  = conn.prepareStatement(query);
 
         if(!StringUtils.containsIgnoreCase(query, "SELECT")){
             //System.out.println("OKOKOK");
@@ -134,8 +134,8 @@ public class DbToXml {
             //System.out.println("OKOKOK");
             throw new Exception("Wrong number of parameters");
         }
-
-        ResultSet r = stat.executeQuery(query);
+        preparedStatement.setString(1, (String) parameters[0]);
+        ResultSet r = preparedStatement.executeQuery();
         doc = parseQuery(r);
         r.close();
         close();

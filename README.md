@@ -38,8 +38,8 @@
 		<li>
     		<h5> parsing an SQL query </h5>
     		DbToXml db = new DbToXml("jdbc:mysql://localhost:3306/...", "root", "", "com.mysql.cj.jdbc.Driver"); </br>
-            db.parseQuery("SelEct * FROM role,people where role.pid = people.pid ");
-            db.save("file.xml");
+            db.parseQuery("SelEct * FROM role,people where role.pid = people.pid ");</br>
+            db.save("file.xml");</br>
 
             file.xml:
             <pre>
@@ -67,8 +67,8 @@
     		<li>
             		<h5> parsing using preparedStatement and indicating output folder </h5>
             		DbToXml db = new DbToXml("jdbc:mysql://localhost:3306/...", "root", "", "com.mysql.cj.jdbc.Driver"); </br>
-                    db.parseQuery("SelEct * FROM role,people where role.pid = people.pid ");
-                    db.save("file.xml");
+                    db.parseQuery("SelEct * FROM role,people where role.pid = people.pid and role.name = ? ", new String[]{"Blondie"});</br>
+                    db.save("output/file.xml");</br>
 
                     file.xml:
                     <pre>
