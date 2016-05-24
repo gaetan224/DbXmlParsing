@@ -1,4 +1,4 @@
-package temate;
+package temate.dbxml;
 
 import java.io.File;
 import java.sql.*;
@@ -83,10 +83,6 @@ public class DbToXml {
             r = stat.executeQuery("SELECT * FROM "+tableName);
             System.out.println("\t");
 
-                // get query columns names through metadata
-                metaData = r.getMetaData();
-                int count = metaData.getColumnCount(); //number of column
-
                 Element line ;
                 while(r.next()) {
                     line = getEntryElement(tableName,r,pKeys);
@@ -108,29 +104,79 @@ public class DbToXml {
      * @throws TransformerException
      */
     public Document parseQuery(String query) throws Exception {
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = dbf.newDocumentBuilder();
-        doc = db.newDocument();
 
-        Element root = doc.createElement(dbName);
-        doc.appendChild(root);
         Statement stat = conn.createStatement();
 
         if(!StringUtils.containsIgnoreCase(query, "SELECT")){
            //System.out.println("OKOKOK");
             throw new Exception("This is not a SELECT Query");
         }
+        ResultSet r = stat.executeQuery(query);
+        doc = parseQuery(r);
+        r.close();
+        close();
+        return doc;
+    }
+
+
+    public Document parseQuery(String query, Object[] parameters) throws Exception {
+
+        Statement stat = conn.createStatement();
+
+        if(!StringUtils.containsIgnoreCase(query, "SELECT")){
+            //System.out.println("OKOKOK");
+            throw new Exception("This is not a SELECT Query");
+        }
+
+        int countParameters = StringUtils.countMatches(query,"?");
+
+        if(countParameters != parameters.length){
+            //System.out.println("OKOKOK");
+            throw new Exception("Wrong number of parameters");
+        }
 
         ResultSet r = stat.executeQuery(query);
+        doc = parseQuery(r);
+        r.close();
+        close();
+        return doc;
+    }
 
 
+    public Document parseQuery(ResultSet r) throws Exception {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        doc = db.newDocument();
 
+        Element root = doc.createElement("Query");
+        doc.appendChild(root);
 
+        ResultSetMetaData metaData = r.getMetaData();
+        int count = metaData.getColumnCount(); //number of column
+        Element line;
+        int countLine = 0;
+        while(r.next()) {
+            countLine++;
+            line = doc.createElement("line");
+            line.setAttribute("id",""+countLine);
 
+            for (int i = 1; i <= count; i++) {
+
+                String columnName = metaData.getColumnLabel(i);
+                String columnValue = r.getString(i);
+                Element columnElement = doc.createElement(columnName);
+                columnElement.appendChild(doc.createTextNode(columnValue));
+                line.appendChild(columnElement);
+            }
+            root.appendChild(line);
+        }
 
 
         return doc;
     }
+
+
+
 
     public void save(String outputDir) throws TransformerException {
         //saving file
@@ -208,5 +254,11 @@ public class DbToXml {
         }
         return line;
     }
+     private void close() throws SQLException {
+
+         if (conn != null) {
+             conn.close();
+         }
+     }
 
 }
